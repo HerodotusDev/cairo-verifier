@@ -1,9 +1,10 @@
-#[derive(Drop)]
+#[derive(Drop, Copy)]
 struct AddrValue {
     address: felt252,
     value: felt252
 }
 
+//#[derive(Drop)]
 type Page = Array<AddrValue>;
 
 // Information about a continuous page (a consecutive section of the public memory)..
@@ -40,6 +41,24 @@ impl PageImpl of PageTrait {
             let current = self.at(i);
 
             res *= z - (*current.address + alpha * *current.value);
+            i += 1;
+        }
+    }
+
+    fn extract_range(self: @Page, addr: felt252, len: felt252) -> Span<felt252> {
+        let mut arr = ArrayTrait::new();
+        let mut i = 0;
+
+        loop {
+            if i == len {
+                break arr.span();
+            }
+
+            let current = *self.at((addr + i).try_into().unwrap());
+
+            // TODO is this needed? If not we can just use slice directly 
+            assert(current.address == addr + i, 'Invalid address');
+            arr.append(current.value);
             i += 1;
         }
     }

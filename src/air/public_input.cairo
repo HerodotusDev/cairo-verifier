@@ -2,6 +2,7 @@ use cairo_verifier::air::public_memory::{
     Page, PageTrait, ContinuousPageHeader, get_continuous_pages_product
 };
 use cairo_verifier::common::math::{pow, Felt252PartialOrd, Felt252Div};
+use cairo_verifier::air::constants::{segments, MAX_ADDRESS, get_builtins, INITIAL_PC};
 
 #[derive(Drop)]
 struct SegmentInfo {
@@ -57,5 +58,36 @@ impl PublicInputImpl of PublicInputTrait {
         let total_length = (self.main_page.len()).into() + continuous_pages_total_length;
 
         (prod, total_length)
+    }
+
+    fn verify(self: @PublicInput) -> (felt252, felt252) {
+        let public_segments = self.segments;
+
+        let initial_pc = *public_segments.at(segments::PROGRAM).begin_addr;
+        let final_pc = *public_segments.at(segments::PROGRAM).stop_ptr;
+        let initial_ap = *public_segments.at(segments::EXECUTION).begin_addr;
+        let initial_fp = initial_ap;
+        let final_ap = *public_segments.at(segments::EXECUTION).stop_ptr;
+        let output_start = *public_segments.at(segments::OUTPUT).begin_addr;
+        let output_stop = *public_segments.at(segments::OUTPUT).stop_ptr;
+
+        assert(initial_ap < MAX_ADDRESS, 'Invalid initial_ap');
+        assert(final_ap < MAX_ADDRESS, 'Invalid final_ap');
+
+        // TODO support more pages?
+        assert((*self.continuous_page_headers).len() == 0, 'Invalid continuous_page_headers');
+
+        let builtins = get_builtins();
+        let memory = self.main_page;
+
+        // 1. Program segment
+        assert(initial_pc == INITIAL_PC, 'Invalid initial_pc');
+        assert(final_pc == INITIAL_PC + 4, 'Invalid final_pc');
+
+        let program_end_pc = initial_fp - 2;
+        let program_len = program_end_pc - initial_pc;
+        memory.extract_range(initial_pc, program_len);
+
+        (0, 0)
     }
 }
