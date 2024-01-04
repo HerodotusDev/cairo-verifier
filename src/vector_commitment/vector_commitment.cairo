@@ -12,7 +12,7 @@ struct VectorCommitment {
     commitment_hash: felt252
 }
 
-#[derive(Drop, Copy)]
+#[derive(Drop, Copy, Serde)]
 struct VectorCommitmentConfig {
     height: felt252,
     n_verifier_friendly_commitment_layers: felt252,

@@ -1,3 +1,5 @@
+use cairo_verifier::vector_commitment::vector_commitment::VectorCommitmentConfig;
+
 #[derive(Drop, Serde)]
 struct StarkConfig {
     traces: TracesConfig,
@@ -23,14 +25,8 @@ struct TracesConfig {
 
 #[derive(Drop, Serde)]
 struct TableCommitmentConfig {
-    columns: felt252,
+    n_columns: felt252,
     vector: VectorCommitmentConfig
-}
-
-#[derive(Drop, Serde)]
-struct VectorCommitmentConfig {
-    height: felt252,
-    verifier_friendly_commitment_layers: felt252,
 }
 
 #[derive(Drop, Serde)]
