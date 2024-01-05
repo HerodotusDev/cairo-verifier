@@ -25,38 +25,6 @@ struct FriConfig {
     log_last_layer_degree_bound: felt252,
 }
 
-impl FriConfigFrom of Into<FriConfigInputStruct, FriConfig> {
-    fn into(self: FriConfigInputStruct) -> FriConfig {
-        let mut inner_layers = ArrayTrait::<TableCommitmentConfig>::new();
-        let mut i = 0;
-        loop {
-            if i == self.inner_layers.len() {
-                break;
-            }
-
-            inner_layers
-                .append(
-                    TableCommitmentConfig {
-                        n_columns: *self.inner_layers.at(i),
-                        vector: VectorCommitmentConfig {
-                            height: *self.inner_layers.at(i + 1),
-                            n_verifier_friendly_commitment_layers: *self.inner_layers.at(i + 2),
-                        }
-                    }
-                );
-            i += 3;
-        };
-
-        FriConfig {
-            log_input_size: self.log_input_size,
-            n_layers: self.n_layers,
-            inner_layers: inner_layers.span(),
-            fri_step_sizes: self.fri_step_sizes.span(),
-            log_last_layer_degree_bound: self.log_last_layer_degree_bound,
-        }
-    }
-}
-
 fn fri_config_validate(
     config: FriConfig, log_n_cosets: felt252, n_verifier_friendly_commitment_layers: felt252
 ) -> felt252 {

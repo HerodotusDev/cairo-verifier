@@ -1,4 +1,8 @@
-use cairo_verifier::vector_commitment::vector_commitment::VectorCommitmentConfig;
+use cairo_verifier::{
+    fri::fri_config::FriConfig as DeserializationUnfriendlyFriConfig,
+    table_commitment::TableCommitmentConfig,
+    vector_commitment::vector_commitment::VectorCommitmentConfig,
+};
 
 #[derive(Drop, Serde)]
 struct StarkConfig {
@@ -24,12 +28,6 @@ struct TracesConfig {
 }
 
 #[derive(Drop, Serde)]
-struct TableCommitmentConfig {
-    n_columns: felt252,
-    vector: VectorCommitmentConfig
-}
-
-#[derive(Drop, Serde)]
 struct FriConfig {
     // Log2 of the size of the input layer to FRI.
     log_input_size: felt252,
@@ -42,6 +40,38 @@ struct FriConfig {
     // i.e. the number of FRI-foldings between layer i and i+1.
     fri_step_sizes: Array<felt252>,
     log_last_layer_degree_bound: felt252,
+}
+
+impl IntoDeserializationUnfriendlyFriConfig of Into<FriConfig, DeserializationUnfriendlyFriConfig> {
+    fn into(self: FriConfig) -> DeserializationUnfriendlyFriConfig {
+        let mut inner_layers = ArrayTrait::<TableCommitmentConfig>::new();
+        let mut i = 0;
+        loop {
+            if i == self.inner_layers.len() {
+                break;
+            }
+
+            inner_layers
+                .append(
+                    TableCommitmentConfig {
+                        n_columns: *self.inner_layers.at(i),
+                        vector: VectorCommitmentConfig {
+                            height: *self.inner_layers.at(i + 1),
+                            n_verifier_friendly_commitment_layers: *self.inner_layers.at(i + 2),
+                        }
+                    }
+                );
+            i += 3;
+        };
+
+        DeserializationUnfriendlyFriConfig {
+            log_input_size: self.log_input_size,
+            n_layers: self.n_layers,
+            inner_layers: inner_layers.span(),
+            fri_step_sizes: self.fri_step_sizes.span(),
+            log_last_layer_degree_bound: self.log_last_layer_degree_bound,
+        }
+    }
 }
 
 #[derive(Drop, Serde)]
