@@ -1,4 +1,4 @@
-use cairo_verifier::input_structs::stark_config::ProofOfWorkConfig;
+use cairo_verifier::structs::stark_config::ProofOfWorkConfig;
 use cairo_verifier::common::math::Felt252PartialOrd;
 
 const MIN_PROOF_OF_WORK_BITS: felt252 = 30;

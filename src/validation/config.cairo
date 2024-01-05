@@ -1,5 +1,5 @@
 use cairo_verifier::{
-    input_structs::stark_config::TracesConfig, validation::asserts::assert_in_range,
+    structs::stark_config::TracesConfig, validation::asserts::assert_in_range,
     vector_commitment::vector_commitment::validate_vector_commitment,
     fri::fri_config::fri_config_validate,
 };

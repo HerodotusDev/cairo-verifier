@@ -1,5 +1,5 @@
 use cairo_verifier::{
-    input_structs::stark_proof::StarkProof, validation::stark_config::stark_config_validate
+    structs::stark_proof::StarkProof, validation::stark_config::stark_config_validate
 };
 
 const SECURITY_BITS: felt252 = 9;
