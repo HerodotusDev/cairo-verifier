@@ -16,9 +16,9 @@ fn stark_config_validate(stark_config: StarkConfig, security_bits: felt252) {
         log_eval_domain_size,
         stark_config.n_verifier_friendly_commitment_layers
     );
-    // fri_config_validate(
-    //     stark_config.fri,
-    //     stark_config.log_n_cosets,
-    //     stark_config.n_verifier_friendly_commitment_layers
-    // );
+// fri_config_validate(
+//     stark_config.fri,
+//     stark_config.log_n_cosets,
+//     stark_config.n_verifier_friendly_commitment_layers
+// );
 }
