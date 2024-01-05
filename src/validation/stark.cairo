@@ -3,7 +3,7 @@ use cairo_verifier::{
     validation::stark_config::stark_config_validate
 };
 
-const SECURITY_BITS: felt252 = 96;
+const SECURITY_BITS: felt252 = 9;
 
 
 fn verify_stark_proof(proof: StarkProof) {

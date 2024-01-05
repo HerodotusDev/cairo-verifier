@@ -22,10 +22,10 @@ fn traces_config_validate(
         config.interaction.n_columns == AIR_LAYOUT_N_INTERACTION_COLUMNS, 'Wrong number of columns'
     );
 
-    // validate_vector_commitment(
-    //     config.original.vector, log_eval_domain_size, n_verifier_friendly_commitment_layers,
-    // );
-    // validate_vector_commitment(
-    //     config.interaction.vector, log_eval_domain_size, n_verifier_friendly_commitment_layers,
-    // );
+    validate_vector_commitment(
+        config.original.vector, log_eval_domain_size, n_verifier_friendly_commitment_layers,
+    );
+    validate_vector_commitment(
+        config.interaction.vector, log_eval_domain_size, n_verifier_friendly_commitment_layers,
+    );
 }
