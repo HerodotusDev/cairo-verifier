@@ -11,11 +11,11 @@ fn stark_config_validate(stark_config: StarkConfig, security_bits: felt252) {
     let log_eval_domain_size = stark_config.log_trace_domain_size + stark_config.log_n_cosets;
     traces_config_validate(stark_config.traces, log_eval_domain_size, security_bits);
 
-    // validate_vector_commitment(
-    //     stark_config.composition.vector,
-    //     log_eval_domain_size,
-    //     stark_config.n_verifier_friendly_commitment_layers
-    // );
+    validate_vector_commitment(
+        stark_config.composition.vector,
+        log_eval_domain_size,
+        stark_config.n_verifier_friendly_commitment_layers
+    );
     // fri_config_validate(
     //     stark_config.fri,
     //     stark_config.log_n_cosets,
