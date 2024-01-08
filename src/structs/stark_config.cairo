@@ -10,7 +10,7 @@ const MAX_N_COLUMNS: felt252 = 128;
 const AIR_LAYOUT_N_ORIGINAL_COLUMNS: felt252 = 12;
 const AIR_LAYOUT_N_INTERACTION_COLUMNS: felt252 = 3;
 
-#[derive(Drop, Serde)]
+#[derive(Drop, Clone, Serde)]
 struct StarkConfig {
     traces: TracesConfig,
     composition: TableCommitmentConfig,
@@ -45,7 +45,7 @@ fn stark_config_validate(stark_config: StarkConfig, security_bits: felt252) {
     );
 }
 
-#[derive(Drop, Serde)]
+#[derive(Drop, Clone, Serde)]
 struct TracesConfig {
     original: TableCommitmentConfig,
     interaction: TableCommitmentConfig,
@@ -73,7 +73,7 @@ fn traces_config_validate(
     );
 }
 
-#[derive(Drop, Serde)]
+#[derive(Drop, Clone, Serde)]
 struct FriConfig {
     // Log2 of the size of the input layer to FRI.
     log_input_size: felt252,
@@ -120,7 +120,7 @@ impl IntoDeserializationUnfriendlyFriConfig of Into<FriConfig, DeserializationUn
     }
 }
 
-#[derive(Drop, Serde)]
+#[derive(Drop, Clone, Serde)]
 struct ProofOfWorkConfig {
     // Proof of work difficulty (number of bits required to be 0).
     n_bits: felt252,
