@@ -10,6 +10,7 @@ mod array_split;
 mod consts;
 mod merge_sort;
 mod powers_array;
+mod asserts;
 
 #[cfg(test)]
 mod tests;

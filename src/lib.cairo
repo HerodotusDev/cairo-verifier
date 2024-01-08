@@ -9,7 +9,7 @@ mod table_commitment;
 mod validation;
 mod vector_commitment;
 
-use cairo_verifier::{structs::stark_proof::StarkProof, validation::stark::verify_stark_proof};
+use cairo_verifier::{structs::stark_proof::StarkProof, structs::stark_proof::verify_stark_proof};
 
 
 fn main(x: Array<felt252>) {

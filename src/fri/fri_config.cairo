@@ -2,7 +2,7 @@ use core::traits::TryInto;
 use core::traits::Into;
 use cairo_verifier::{
     common::math::{pow, Felt252PartialOrd}, table_commitment::TableCommitmentConfig,
-    structs::stark_config::FriConfig as FriConfigInputStruct, validation::asserts::assert_in_range,
+    structs::stark_config::FriConfig as FriConfigInputStruct, common::asserts::assert_in_range,
     vector_commitment::vector_commitment::{validate_vector_commitment, VectorCommitmentConfig},
 };
 
