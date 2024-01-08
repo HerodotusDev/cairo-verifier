@@ -8,6 +8,7 @@ mod fri;
 mod table_commitment;
 mod vector_commitment;
 mod queries;
+mod proof_of_work;
 
 use cairo_verifier::input_structs::stark_proof::StarkProof;
 

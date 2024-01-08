@@ -1,4 +1,9 @@
-use cairo_verifier::{channel::channel::{Channel, ChannelTrait}, common::merge_sort::merge_sort};
+use cairo_verifier::{
+    channel::channel::{Channel, ChannelTrait},
+    common::{
+        merge_sort::merge_sort, math::pow, consts::FIELD_GENERATOR, bit_reverse::BitReverseTrait
+    }
+};
 
 // 2^64 = 18446744073709551616
 const U128maxU64: u128 = 18446744073709551616;
@@ -79,4 +84,31 @@ fn usort(input: Array<u64>) -> Array<felt252> {
     };
 
     result
+}
+
+fn queries_to_points(
+    queries: Span<felt252>, log_eval_domain_size: u8, eval_generator: felt252
+) -> Array<felt252> {
+    let mut points = ArrayTrait::<felt252>::new();
+
+    // Evaluation domains of size greater than 2**64 are not supported
+    assert(log_eval_domain_size <= 64, 'Eval domain too big');
+
+    // A 'log_eval_domain_size' bits index can be bit reversed using bit_reverse_u64 if it is
+    // multiplied by 2**(64 - log_eval_domain_size) first.
+    let shift = pow(2, 64 - log_eval_domain_size.into());
+
+    let mut i: u32 = 0;
+    loop {
+        if i == queries.len() {
+            break;
+        }
+
+        let index: u64 = (*queries.at(i) * shift).try_into().unwrap();
+
+        // Compute the x value of the query in the evaluation domain coset:
+        // FIELD_GENERATOR * eval_generator ^ reversed_index.
+        points.append(FIELD_GENERATOR * pow(eval_generator, index.bit_reverse().into()));
+    };
+    points
 }
