@@ -1,6 +1,7 @@
 mod air;
 mod channel;
 mod common;
+mod domains;
 mod fri;
 mod structs;
 mod oods;
