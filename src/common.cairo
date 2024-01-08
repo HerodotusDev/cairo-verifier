@@ -1,4 +1,5 @@
 mod blake2s;
+mod blake2s_u8;
 mod flip_endianness;
 mod from_span;
 mod horner_eval;
