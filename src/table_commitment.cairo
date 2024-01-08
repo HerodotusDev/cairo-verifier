@@ -16,7 +16,7 @@ struct TableCommitment {
     vector_commitment: VectorCommitment,
 }
 
-#[derive(Drop, Copy)]
+#[derive(Drop, Copy, Serde)]
 struct TableCommitmentConfig {
     n_columns: felt252,
     vector: VectorCommitmentConfig,
