@@ -1,0 +1,18 @@
+[package]
+name = "smart_proof"
+version = "0.1.0"
+edition = "2023_10"
+
+# See more keys and their definitions at https://docs.swmansion.com/scarb/docs/reference/manifest.html
+
+[dependencies]
+snforge_std = { git = "https://github.com/foundry-rs/starknet-foundry", tag = "v0.16.0" }
+starknet = "2.4.4"
+
+[[target.starknet-contract]]
+casm = true
+
+[tool.sncast.testnet]
+account = "testnet-sepolia"
+accounts-file = "~/.starknet_accounts/starknet_open_zeppelin_accounts.json"
+url = "https://free-rpc.nethermind.io/sepolia-juno/v0_6"
