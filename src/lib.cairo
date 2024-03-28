@@ -1,7 +1,8 @@
 mod air;
-// === RECURSIVE BEGIN ===
+
+#[cfg(feature: 'recursive')]
 mod benches;
-// === RECURSIVE END ===
+
 mod channel;
 mod common;
 mod deserialization;
@@ -14,31 +15,31 @@ mod stark;
 mod table_commitment;
 mod vector_commitment;
 
-// === RECURSIVE BEGIN ===
+#[cfg(feature: 'recursive')]
 mod tests;
-// === RECURSIVE END ===
 
 use cairo_verifier::{
-    deserialization::stark::StarkProofWithSerde, stark::{StarkProof, StarkProofImpl},
-    // === DEX BEGIN ===
-    // air::layouts::dex::public_input::DexPublicInputImpl as PublicInputImpl,
-    // === DEX END ===
-    // === RECURSIVE BEGIN ===
-    air::layouts::recursive::public_input::RecursivePublicInputImpl as PublicInputImpl,
-// === RECURSIVE END ===
-// === RECURSIVE_WITH_POSEIDON BEGIN ===
-// air::layouts::recursive_with_poseidon::public_input::RecursiveWithPoseidonPublicInputImpl as PublicInputImpl,
-// === RECURSIVE_WITH_POSEIDON END ===
-// === SMALL BEGIN ===
-// air::layouts::small::public_input::SmallPublicInputImpl as PublicInputImpl,
-// === SMALL END ===
-// === STARKNET BEGIN ===
-// air::layouts::starknet::public_input::StarknetPublicInputImpl as PublicInputImpl,
-// === STARKNET END ===
-// === STARKNET_WITH_KECCAK BEGIN ===
-// air::layouts::starknet_with_keccak::public_input::StarknetWithKeccakPublicInputImpl as PublicInputImpl,
-// === STARKNET_WITH_KECCAK END ===
+    deserialization::stark::StarkProofWithSerde, stark::{StarkProof, StarkProofImpl}
 };
+
+#[cfg(feature: 'dex')]
+use cairo_verifier::air::layouts::dex::public_input::{DexPublicInputImpl as PublicInputImpl};
+
+#[cfg(feature: 'recursive')]
+use cairo_verifier::air::layouts::recursive::public_input::RecursivePublicInputImpl as PublicInputImpl;
+
+#[cfg(feature: 'recursive_with_poseidon')]
+use cairo_verifier::air::layouts::recursive_with_poseidon::public_input::RecursiveWithPoseidonPublicInputImpl as PublicInputImpl;
+
+#[cfg(feature: 'small')]
+use cairo_verifier::air::layouts::small::public_input::SmallPublicInputImpl as PublicInputImpl;
+
+#[cfg(feature: 'starknet')]
+use cairo_verifier::air::layouts::starknet::public_input::StarknetPublicInputImpl as PublicInputImpl;
+
+#[cfg(feature: 'starknet_with_keccak')]
+use cairo_verifier::air::layouts::starknet_with_keccak::public_input::StarknetWithKeccakPublicInputImpl as PublicInputImpl;
+
 
 const SECURITY_BITS: felt252 = 50;
 

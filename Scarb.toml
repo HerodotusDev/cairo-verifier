@@ -1,3 +1,16 @@
 [package]
 name = "cairo_verifier"
 version = "0.1.0"
+
+[features]
+default = ["recursive", "keccak"]
+
+dex = []
+recursive = []
+recursive_with_poseidon = []
+small = []
+starknet = []
+starknet_with_keccak = []
+
+keccak = []
+blake2s = []

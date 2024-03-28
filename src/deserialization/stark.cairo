@@ -3,24 +3,6 @@ use cairo_verifier::{
         public_input::{ContinuousPageHeader, PublicInput, SegmentInfo},
         public_memory::{AddrValue, Page},
     },
-    // === DEX BEGIN ===
-    // air::layouts::dex::traces::TracesConfig,
-    // === DEX END ===
-    // === RECURSIVE BEGIN ===
-    air::layouts::recursive::traces::TracesConfig,
-    // === RECURSIVE END ===
-    // === RECURSIVE_WITH_POSEIDON BEGIN ===
-    // air::layouts::recursive_with_poseidon::traces::TracesConfig,
-    // === RECURSIVE_WITH_POSEIDON END ===
-    // === SMALL BEGIN ===
-    // air::layouts::small::traces::TracesConfig,
-    // === SMALL END ===
-    // === STARKNET BEGIN ===
-    // air::layouts::starknet::traces::TracesConfig,
-    // === STARKNET END ===
-    // === STARKNET_WITH_KECCAK BEGIN ===
-    // air::layouts::starknet_with_keccak::traces::TracesConfig,
-    // === STARKNET_WITH_KECCAK END ===
     deserialization::{
         traces::{
             TracesConfigWithSerde, TracesDecommitmentWithSerde, TracesWitnessWithSerde,
@@ -32,6 +14,25 @@ use cairo_verifier::{
     },
     stark::{StarkProof, StarkConfig, StarkUnsentCommitment, StarkWitness},
 };
+
+#[cfg(feature: 'dex')]
+use cairo_verifier::air::layouts::dex::traces::TracesConfig;
+
+#[cfg(feature: 'recursive')]
+use cairo_verifier::air::layouts::recursive::traces::TracesConfig;
+
+#[cfg(feature: 'recursive_with_poseidon')]
+use cairo_verifier::air::layouts::recursive_with_poseidon::traces::TracesConfig;
+
+#[cfg(feature: 'small')]
+use cairo_verifier::air::layouts::small::traces::TracesConfig;
+
+#[cfg(feature: 'starknet')]
+use cairo_verifier::air::layouts::starknet::traces::TracesConfig;
+
+#[cfg(feature: 'starknet_with_keccak')]
+use cairo_verifier::air::layouts::starknet_with_keccak::traces::TracesConfig;
+
 
 #[derive(Drop, Serde)]
 struct StarkProofWithSerde {

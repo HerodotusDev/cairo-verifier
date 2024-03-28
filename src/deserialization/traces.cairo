@@ -1,34 +1,4 @@
 use cairo_verifier::{
-    // === DEX BEGIN ===
-    // air::layouts::dex::{
-    // traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    // },
-    // === DEX END ===
-    // === RECURSIVE BEGIN ===
-    air::layouts::recursive::{
-        traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    },
-    // === RECURSIVE END ===
-    // === RECURSIVE_WITH_POSEIDON BEGIN ===
-    // air::layouts::recursive_with_poseidon::{
-    // traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    // },
-    // === RECURSIVE_WITH_POSEIDON END ===
-    // === SMALL BEGIN ===
-    // air::layouts::small::{
-    // traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    // },
-    // === SMALL END ===
-    // === STARKNET BEGIN ===
-    // air::layouts::starknet::{
-    // traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    // },
-    // === STARKNET END ===
-    // === STARKNET_WITH_KECCAK BEGIN ===
-    // air::layouts::starknet_with_keccak::{
-    // traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
-    // },
-    // === STARKNET_WITH_KECCAK END ===
     deserialization::{
         vector::{
             VectorCommitmentConfig, VectorCommitmentWitness, VectorCommitmentConfigWithSerde,
@@ -42,6 +12,36 @@ use cairo_verifier::{
     table_commitment::table_commitment::{
         TableCommitmentConfig, TableCommitmentWitness, TableDecommitment
     },
+};
+
+#[cfg(feature: 'dex')]
+use cairo_verifier::air::layouts::dex::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
+};
+
+#[cfg(feature: 'recursive')]
+use cairo_verifier::air::layouts::recursive::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
+};
+
+#[cfg(feature: 'recursive_with_poseidon')]
+use cairo_verifier::air::layouts::recursive_with_poseidon::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
+};
+
+#[cfg(feature: 'small')]
+use cairo_verifier::air::layouts::small::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
+};
+
+#[cfg(feature: 'starknet')]
+use cairo_verifier::air::layouts::starknet::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
+};
+
+#[cfg(feature: 'starknet_with_keccak')]
+use cairo_verifier::air::layouts::starknet_with_keccak::{
+    traces::TracesConfig, traces::{TracesUnsentCommitment, TracesDecommitment, TracesWitness}
 };
 
 #[derive(Drop, Serde)]

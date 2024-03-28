@@ -17,5 +17,18 @@ jobs:
       - name: Format code
         run: scarb fmt --check
       
+      # temporary solution
+      - name: Clone custom scarb
+        run: |
+          git clone https://github.com/fmkra/scarb.git
+          cd scarb && git checkout feature_set_manipulations
+        working-directory: ${{ github.workspace }}
+      
+      # temporary solution
+      - name: Build custom scarb
+        run: cargo build
+        working-directory: ${{ github.workspace }}/scarb
+      
       - name: Run tests
-        run: scarb test
+        run: ./scarb/target/debug/scarb test
+        working-directory: ${{ github.workspace }}
