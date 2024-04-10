@@ -33,6 +33,11 @@ fn main() -> anyhow::Result<()> {
     let unsent_commitment: VecFelt252 =
         serde_json::from_str(&parsed.unsent_commitment.to_string()).unwrap();
     let witness: VecFelt252 = serde_json::from_str(&parsed.witness.to_string()).unwrap();
+    
+    println!("config: {}", config.len());
+    println!("public_input: {}", public_input.len());
+    println!("unsent_commitment: {}", unsent_commitment.len());
+    println!("witness: {}", witness.len());
 
     let proof = chain!(
         config.into_iter(),

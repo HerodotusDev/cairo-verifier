@@ -34,6 +34,13 @@ fn stark_verify(
     witness: StarkWitness,
     stark_domains: StarkDomains,
 ) {
+    // --- REQUIRED CONTEXT FOR SUBSTEP 1
+    // --- queries_hash: felt252
+    // --- commitment_hash: felt252
+    // --- stark_domains_hash: felt252
+
+    // --- BEGIN SUBSTEP 1 --- (queries, commitment, stark_domains, Witness) -> (fri_decommitment)
+
     // First layer decommit.
     traces_decommit(
         queries, commitment.traces, witness.traces_decommitment, witness.traces_witness
@@ -69,10 +76,19 @@ fn stark_verify(
     let fri_decommitment = FriDecommitment {
         values: oods_poly_evals.span(), points: points.span(),
     };
+    // --- END SUBSTEP 1 ---
+
+    // --- REQUIRED CONTEXT FOR SUBSTEP 2
+    // --- queries_hash: felt252
+    // --- fri_commitment_hash: felt252
+    // --- fri_decommitment_hash: felt252
+
+    // --- BEGIN SUBSTEP 2 --- (queries, fri_commitment, fri_decommitment, fri_witness) -> (bool)
     fri_verify(
         queries: queries,
         commitment: commitment.fri,
         decommitment: fri_decommitment,
         witness: witness.fri_witness,
     )
+// --- END SUBSTEP 2 ---
 }

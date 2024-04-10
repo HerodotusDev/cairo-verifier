@@ -76,6 +76,7 @@ struct StarkProof {
 #[generate_trait]
 impl StarkProofImpl of StarkProofTrait {
     fn verify(self: @StarkProof, security_bits: felt252) {
+        // --- BEGIN STEP 1 --- (StarkConfig, PublicInput, StarkUnsentCommitment) -> (queries, stark_commitment, stark_domains)
         // Validate config.
         self.config.validate(security_bits);
 
@@ -101,6 +102,7 @@ impl StarkProofImpl of StarkProofTrait {
             (*self.config.n_queries).try_into().unwrap(),
             stark_domains.eval_domain_size.try_into().unwrap()
         );
+        // --- END STEP 1 --- 
 
         // STARK verify phase.
         stark_verify::stark_verify(
