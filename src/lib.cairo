@@ -14,6 +14,7 @@ mod queries;
 mod stark;
 mod table_commitment;
 mod vector_commitment;
+mod split;
 
 #[cfg(feature: 'recursive')]
 mod tests;
