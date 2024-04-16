@@ -7,7 +7,7 @@ edition = "2023_10"
 
 [dependencies]
 cairo_verifier = { path = ".." }
-snforge_std = { git = "https://github.com/foundry-rs/starknet-foundry", tag = "v0.20.1" }
+snforge_std = { git = "https://github.com/foundry-rs/starknet-foundry", tag = "v0.21.0" }
 
 [[target.starknet-contract]]
 casm = true

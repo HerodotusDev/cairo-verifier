@@ -4,22 +4,21 @@ use cairo_verifier::{
     tests::{stone_proof_fibonacci, stone_proof_fibonacci_keccak}
 };
 
-// === BLAKE2S BEGIN ===
-// #[test]
-// #[available_gas(9999999999)]
-// fn test_stark_verify() {
-//     let queries = stone_proof_fibonacci::queries::get().span();
-//     let commitment = stone_proof_fibonacci::stark::commitment::get();
-//     let witness = stone_proof_fibonacci::stark::witness::get();
-//     let stark_domains = stone_proof_fibonacci::stark::domains::get();
-// 
-//     stark_verify(
-//         NUM_COLUMNS_FIRST, NUM_COLUMNS_SECOND, queries, commitment, witness, stark_domains,
-//     )
-// }
-// === BLAKE2S END ===
+#[cfg(feature: 'blake2s')]
+#[test]
+#[available_gas(9999999999)]
+fn test_stark_verify() {
+    let queries = stone_proof_fibonacci::queries::get().span();
+    let commitment = stone_proof_fibonacci::stark::commitment::get();
+    let witness = stone_proof_fibonacci::stark::witness::get();
+    let stark_domains = stone_proof_fibonacci::stark::domains::get();
 
-// === KECCAK BEGIN ===
+    stark_verify(
+        NUM_COLUMNS_FIRST, NUM_COLUMNS_SECOND, queries, commitment, witness, stark_domains,
+    )
+}
+
+#[cfg(feature: 'keccak')]
 #[test]
 #[available_gas(9999999999)]
 fn test_stark_verify() {
@@ -32,6 +31,3 @@ fn test_stark_verify() {
         NUM_COLUMNS_FIRST, NUM_COLUMNS_SECOND, queries, commitment, witness, stark_domains,
     )
 }
-// === KECCAK END ===
-
-

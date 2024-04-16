@@ -2,26 +2,28 @@ use cairo_verifier::{
     queries::queries::queries_to_points, domains::StarkDomains,
     fri::fri::{FriDecommitment, fri_verify},
     stark::{StarkUnsentCommitment, StarkWitness, StarkCommitment},
-    // === DEX BEGIN ===
-    // air::layouts::dex::traces::traces_decommit, // === DEX END ===
-    // === RECURSIVE BEGIN ===
-    air::layouts::recursive::traces::traces_decommit,
-    // === RECURSIVE END ===
-    // === RECURSIVE_WITH_POSEIDON BEGIN ===
-    // air::layouts::recursive_with_poseidon::traces::traces_decommit,
-    // === RECURSIVE_WITH_POSEIDON END ===
-    // === SMALL BEGIN ===
-    // air::layouts::small::traces::traces_decommit,
-    // === SMALL END ===
-    // === STARKNET BEGIN ===
-    // air::layouts::starknet::traces::traces_decommit,
-    // === STARKNET END ===
-    // === STARKNET_WITH_KECCAK BEGIN ===
-    // air::layouts::starknet_with_keccak::traces::traces_decommit,
-    // === STARKNET_WITH_KECCAK END ===
     table_commitment::table_commitment::table_decommit,
     oods::{OodsEvaluationInfo, eval_oods_boundary_poly_at_points},
 };
+
+#[cfg(feature: 'dex')]
+use cairo_verifier::air::layouts::dex::traces::traces_decommit;
+
+#[cfg(feature: 'recursive')]
+use cairo_verifier::air::layouts::recursive::traces::traces_decommit;
+
+#[cfg(feature: 'recursive_with_poseidon')]
+use cairo_verifier::air::layouts::recursive_with_poseidon::traces::traces_decommit;
+
+#[cfg(feature: 'small')]
+use cairo_verifier::air::layouts::small::traces::traces_decommit;
+
+#[cfg(feature: 'starknet')]
+use cairo_verifier::air::layouts::starknet::traces::traces_decommit;
+
+#[cfg(feature: 'starknet_with_keccak')]
+use cairo_verifier::air::layouts::starknet_with_keccak::traces::traces_decommit;
+
 
 // STARK verify phase.
 fn stark_verify(

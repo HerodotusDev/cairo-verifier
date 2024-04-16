@@ -1,49 +1,49 @@
 use cairo_verifier::{
-    common::array_extend::ArrayExtendTrait,
-    // === DEX BEGIN ===
-    // air::layouts::dex::{
-    // AIRComposition, AIROods, DexAIRCompositionImpl, DexAIROodsImpl,
-    // global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
-    // constants::CONSTRAINT_DEGREE,
-    // },
-    // === DEX END ===
-    // === RECURSIVE BEGIN ===
-    air::layouts::recursive::{
-        AIRComposition, AIROods, RecursiveAIRCompositionImpl, RecursiveAIROodsImpl,
-        global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
-        constants::CONSTRAINT_DEGREE,
-    },
-    // === RECURSIVE END ===
-    // === RECURSIVE_WITH_POSEIDON BEGIN ===
-    // air::layouts::recursive_with_poseidon::{
-    // AIRComposition, AIROods, RecursiveWithPoseidonAIRCompositionImpl,
-    // RecursiveWithPoseidonAIROodsImpl, global_values::InteractionElements,
-    // public_input::PublicInput, traces::TracesDecommitment, constants::CONSTRAINT_DEGREE,
-    // },
-    // === RECURSIVE_WITH_POSEIDON END ===
-    // === SMALL BEGIN ===
-    // air::layouts::small::{
-    // AIRComposition, AIROods, SmallAIRCompositionImpl, SmallAIROodsImpl,
-    // global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
-    // constants::CONSTRAINT_DEGREE,
-    // },
-    // === SMALL END ===
-    // === STARKNET BEGIN ===
-    // air::layouts::starknet::{
-    // AIRComposition, AIROods, StarknetAIRCompositionImpl, StarknetAIROodsImpl,
-    // global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
-    // constants::CONSTRAINT_DEGREE,
-    // },
-    // === STARKNET END ===
-    // === STARKNET_WITH_KECCAK BEGIN ===
-    // air::layouts::starknet_with_keccak::{
-    // AIRComposition, AIROods, StarknetWithKeccakAIRCompositionImpl,
-    // StarknetWithKeccakAIROodsImpl, global_values::InteractionElements,
-    // public_input::PublicInput, traces::TracesDecommitment, constants::CONSTRAINT_DEGREE,
-    // },
-    // === STARKNET_WITH_KECCAK END ===
-    table_commitment::table_commitment::TableDecommitment
+    common::array_extend::ArrayExtendTrait, table_commitment::table_commitment::TableDecommitment
 };
+
+#[cfg(feature: 'dex')]
+use cairo_verifier::air::layouts::dex::{
+    AIRComposition, AIROods, DexAIRCompositionImpl, DexAIROodsImpl,
+    global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
+    constants::CONSTRAINT_DEGREE,
+};
+
+#[cfg(feature: 'recursive')]
+use cairo_verifier::air::layouts::recursive::{
+    AIRComposition, AIROods, RecursiveAIRCompositionImpl, RecursiveAIROodsImpl,
+    global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
+    constants::CONSTRAINT_DEGREE,
+};
+
+#[cfg(feature: 'recursive_with_poseidon')]
+use cairo_verifier::air::layouts::recursive_with_poseidon::{
+    AIRComposition, AIROods, RecursiveWithPoseidonAIRCompositionImpl,
+    RecursiveWithPoseidonAIROodsImpl, global_values::InteractionElements, public_input::PublicInput,
+    traces::TracesDecommitment, constants::CONSTRAINT_DEGREE,
+};
+
+#[cfg(feature: 'small')]
+use cairo_verifier::air::layouts::small::{
+    AIRComposition, AIROods, SmallAIRCompositionImpl, SmallAIROodsImpl,
+    global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
+    constants::CONSTRAINT_DEGREE,
+};
+
+#[cfg(feature: 'starknet')]
+use cairo_verifier::air::layouts::starknet::{
+    AIRComposition, AIROods, StarknetAIRCompositionImpl, StarknetAIROodsImpl,
+    global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
+    constants::CONSTRAINT_DEGREE,
+};
+
+#[cfg(feature: 'starknet_with_keccak')]
+use cairo_verifier::air::layouts::starknet_with_keccak::{
+    AIRComposition, AIROods, StarknetWithKeccakAIRCompositionImpl, StarknetWithKeccakAIROodsImpl,
+    global_values::InteractionElements, public_input::PublicInput, traces::TracesDecommitment,
+    constants::CONSTRAINT_DEGREE,
+};
+
 
 #[derive(Drop)]
 struct OodsEvaluationInfo {
@@ -141,7 +141,7 @@ fn eval_oods_boundary_poly_at_points(
     evaluations
 }
 
-// === RECURSIVE BEGIN ===
+#[cfg(feature: 'recursive')]
 #[cfg(test)]
 mod tests {
     use cairo_verifier::oods::verify_oods;
@@ -166,6 +166,4 @@ mod tests {
         );
     }
 }
-// === RECURSIVE END ===
-
 

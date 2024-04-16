@@ -30,9 +30,22 @@ For local proof verification, follow these steps:
 
 1. Run the verifier locally on example proof using the following command:
 
+By `default`, the verifier is configured for `layout_type`=`recursive` and `hash_type`=`keccak` for verifier unfriendly commitment layers.
 ```bash
+scarb build &&
 cargo run --release --bin runner -- target/dev/cairo_verifier.sierra.json < examples/proofs/recursive/example_proof.json
 ```
+
+You can easily change configuration by specifying features in scarb build command
+
+```bash
+scarb build --no-default-features --features=<layout_type>,<hash_type>
+```
+
+`layout_type`: [`dex`, `recursive`, `recursive_with_poseidon`, `small`, `starknet`, `starknet_with_keccak`]  
+`hash_type`: [`keccak`, `blake2s`]
+
+All the example_proof's are using `hash_type`=`keccak`
 
 ### Starknet Proof Verification
 
@@ -41,28 +54,19 @@ To verify proofs on Starknet, proceed with the following steps:
 1. Prepare calldata of example proof for sncast:
 
 ```bash
-cargo run --release --bin snfoundry_proof_serializer < examples/proofs/recursive/example_proof.json > examples/starknet/calldata
+cargo run --release --bin snfoundry_proof_serializer < examples/proofs/<layout_type>/example_proof.json > examples/starknet/proof
 ```
 
-2. Call the function with calldata on the Starknet contract:
+2. Call the function with serialized `proof` on the Starknet contract:
+
+In order to run this step, you need to have a Starknet account set up. For details, check [The Starknet Foundry Book](https://foundry-rs.github.io/starknet-foundry/starknet/account.html).
 
 ```bash
 cd examples/starknet
-./1-verify-proof.sh 0x487810706cc0dfdba0c82403d98e9d32dc36793ed2b731231e5ea19f00c5861 calldata
+./1-verify-proof.sh testnet <contract_address> proof
 ```
 
 [List of deployed Verifier Contracts](deployed_contracts.md)
-
-## Configure Verifier
-
-By default, the verifier is configured for recursive layout and keccak hash for verifier unfriendly commitment layers. You can easily change that by using the configure python script (this script is in Experimental stage):
-
-```bash
-python configure.py -l recursive -s keccak
-```
-
-layout types: [dex, recursive, recursive_with_poseidon, small, starknet, starknet_with_keccak]  
-hash types: [keccak, blake2s]
 
 ## Benchmarking
 

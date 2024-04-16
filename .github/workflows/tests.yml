@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  formatting-and-testing:
+  formatting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -16,6 +16,19 @@ jobs:
       
       - name: Format code
         run: scarb fmt --check
-      
+  
+  testing:
+    runs-on: ubuntu-latest
+    needs: formatting
+    strategy:
+      matrix:
+        layout: ["dex", "recursive", "recursive_with_poseidon", "small", "starknet", "starknet_with_keccak"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Scarb
+        uses: software-mansion/setup-scarb@v1
+
       - name: Run tests
-        run: scarb test
+        run: scarb test --no-default-features --features=${{ matrix.layout }},keccak

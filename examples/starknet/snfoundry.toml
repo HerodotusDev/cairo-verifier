@@ -2,3 +2,8 @@
 account = "testnet-sepolia"
 accounts-file = "~/.starknet_accounts/starknet_open_zeppelin_accounts.json"
 url = "https://free-rpc.nethermind.io/sepolia-juno/v0_7"
+
+[sncast.mainnet]
+account = "mainnet"
+accounts-file = "~/.starknet_accounts/starknet_open_zeppelin_accounts.json"
+url = "https://free-rpc.nethermind.io/mainnet-juno/v0_7"
