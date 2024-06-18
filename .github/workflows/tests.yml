@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  formatting-and-testing:
+  verifier-formatting-and-testing:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,5 +20,20 @@ jobs:
       - name: Run tests
         run: scarb test
 
-      - name: Build fact registry
-        run: (cd fact_registry && scarb build)
+  fact-registry-formatting-and-testing:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+      
+        - name: Setup Scarb
+          uses: software-mansion/setup-scarb@v1
+
+        - name: Setup Starknet Foundry
+          uses: foundry-rs/setup-snfoundry@v3
+        
+        - name: Format code
+          run: cd fact_registry && scarb fmt --check
+        
+        - name: Run tests
+          run: cd fact_registry && scarb test
